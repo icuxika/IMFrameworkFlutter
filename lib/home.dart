@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:im_framework_flutter/pages/account/account.dart';
+import 'package:im_framework_flutter/pages/address_book/address_book.dart';
+import 'package:im_framework_flutter/pages/conversation/conversation.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +18,11 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    var homeNavigationPages = <StatefulWidget>[
+      ConversationPage(),
+      AddressBookPage(),
+      AccountPage()
+    ];
     var homeNavigationBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(icon: const Icon(Icons.message), label: "消息"),
       BottomNavigationBarItem(icon: const Icon(Icons.people), label: "联系人"),
@@ -27,12 +35,15 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
         automaticallyImplyLeading: false,
         title: Text("标题"),
       ),
+      body: Container(
+        child: homeNavigationPages[_currentIndex.value],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
         items: homeNavigationBarItems,
         currentIndex: _currentIndex.value,
         type: BottomNavigationBarType.fixed,
-        selectedFontSize: 14,
+        selectedFontSize: 13,
         unselectedFontSize: 12,
         onTap: (index) {
           setState(() {
